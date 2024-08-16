@@ -16,6 +16,7 @@
     align-items: center;
     margin-bottom: 20px;
     width: fit-content;
+    flex-wrap:wrap;
     cursor:pointer;
 }
 .sidebar hr {
@@ -36,4 +37,18 @@
 }
 .small-sidebar{
     width: 5%;
+}
+.small-sidebar p {
+    display: none;
+}
+.small-side h3{
+    display: none;
+}
+.small-side hr{
+    width: 50%;
+    margin-bottom: 25px;
+}
+.side-link.active img{
+    padding-bottom: 2px;
+    border-bottom: 3px solid red;
 }

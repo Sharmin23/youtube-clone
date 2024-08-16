@@ -5,15 +5,9 @@ import Home from './pages/Home/Home'
 import Video from './pages/Video/Video'
 import { useState } from 'react'
 
-
-
-
-
 const App = () => {
 
   const [sidebar,setSidebar] = useState(true);
-
-
 
   return (
     <div>
