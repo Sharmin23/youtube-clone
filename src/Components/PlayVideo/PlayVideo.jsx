@@ -23,7 +23,7 @@ const PlayVideo = ({videoId}) => {
      const fetchOtherData = async () =>{
         //fetching channel data;
         const channelData_url = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${apiData.snippet.channelId}&key=${API_KEY}`;
-        await fetch(ChannelData_url).then(res => res.json).then(data=>setChannelData(data.items[0]) )
+        await fetch(channelData_url).then(res => res.json()).then(data=>setChannelData(data.items[0]) )
 
         //Fetching comment Data
         const comment_url = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet%2Creplies&videoId=${videoId}&key= ${API_KEY}`;
@@ -37,6 +37,8 @@ const PlayVideo = ({videoId}) => {
      useEffect(()=>{
         fetchOtherData();
      },[apiData])
+
+     console.log(channelData);
   return (
     <div className='play-video'>
         {/* <video src={video} controls autoPlay muted ></video> */}
@@ -54,29 +56,29 @@ const PlayVideo = ({videoId}) => {
        
         <hr />
         <div className='publisher'>
-            <img src={ChannelData?ChannelData?.snippet?.thumbnails?.default.url:""} alt="" />
+            <img src={channelData? channelData?.snippet?.thumbnails?.default.url:""} alt="" />
             <div>
             <p>{apiData?apiData.snippet.channelTitle:""}</p>
-            <span>{ChannelData?ChannelData.statistics.subscriberCount:"1M"}</span>
+            <span>{value_converter(channelData?.statistics?.subscriberCount)}</span>
             </div>
             <button>Subscribe</button>
         </div>
         <div className="vid-description">
             {/* <p>Channel that makes learning Easy</p> */}
             {/* <p>Subscribe GreatStack to watch More Tutorials on web development</p> */}
-            <p>{apiData?apiData.snippet.description:'Description Here'}</p>
+            <p>{apiData?apiData.snippet.description?.slice(0,250):'Description Here'}</p>
             <hr />
             <h4>{apiData?apiData.statistics.commentCount:102} Comments</h4>
             {commentData.map((item,index)=>{
               return (
-                <div key ={indx} className="comment">
-                <img src={user_profile} alt="" />
+                <div key ={index} className="comment">
+                <img src={item?.snippet?.topLevelComment?.snippet?.authorProfileImageUrl} alt="" />
                 <div>
-                    <h3>Jack Nicholson <span>1 day ago</span></h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam neque rerum iure ut autem quibusdam nisi distinctio provident iste recusandae.</p>
+                    <h3>{item?.snippet?.topLevelComment?.snippet?.authorDisplayName} <span>1 day ago</span></h3>
+                    <p>{item?.snippet?.topLevelComment?.snippet?.textDisplay}</p>
                     <div className="comment-action">
                         <img src={like} alt="" />
-                        <span>233</span>
+                        <span>{value_converter(item?.snippet?.topLevelComment?.snippet?.likeCount)}</span>
                         <img src={dislike} alt="" />
                     </div>
                 </div>
@@ -93,11 +95,4 @@ const PlayVideo = ({videoId}) => {
 
 export default PlayVideo
 
-/*{moment(apiData.snippet.publishedAt).fromNow():""}*/  //Error 
 
-// value_converter(apiData.statistics?.likeCount) //32 no. line
-// <p>{apiData?apiData.snippet.description:slice(0,250):'Description Here'}</p> //51
-
-//used value convertor function but if i use this then get error
-{/* <img src={ChannelData?ChannelData?.snippet?.thumbnails?.default.url:""} alt="" /> */} //51 no .line
-//{ChannelData?ChannelData.statistics.subscriberCount:"1M"} //54
