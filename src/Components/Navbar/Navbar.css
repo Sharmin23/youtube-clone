@@ -35,8 +35,29 @@ nav{
     width:25px;
     margin-right: 25px;
 }
+@media(max-width:900px){
+    .menu-icon{
+        display: none;
+    }
+    .nav-right img{
+        display: none;
+    }
+    .nav-right .user-icon{
+        display: block;
+        width: 30px;
+    }
+    .logo{
+        width: 90px; 
+    }
+    .nav-middle .search-box input{
+        width:100px;
+    }
+}
+
 
 /* .nav-right jack{
     width: 35px;
     border-radius: 50%;  // display error
 } */
+
+/* nav logo isn't working  for small screen*/
